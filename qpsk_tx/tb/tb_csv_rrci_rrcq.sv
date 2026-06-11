@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 
-module tb_2;
+module tb_csv_rrci_rrcq;
 
     // Define TB_CHECK_INTERNALS only for RTL simulation when hierarchical
     // references into the DUT are available and stable.
