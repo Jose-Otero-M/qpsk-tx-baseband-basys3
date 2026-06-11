@@ -28,6 +28,35 @@ if {[llength $rtl_files] > 0} {
 }
 
 # --------------------------------------------------------------------
+# Add memory initialization files
+# --------------------------------------------------------------------
+
+set mem_files [list]
+
+set mem_hex_files [glob -nocomplain -directory "$root_dir/mem" *.mem]
+set mem_coe_files [glob -nocomplain -directory "$root_dir/mem" *.coe]
+set mem_txt_files [glob -nocomplain -directory "$root_dir/mem" *.txt]
+
+set mem_files [concat $mem_files $mem_hex_files $mem_coe_files $mem_txt_files]
+
+if {[llength $mem_files] > 0} {
+    add_files -fileset sources_1 $mem_files
+
+    foreach mem_file $mem_files {
+        set_property file_type "Memory File" [get_files $mem_file]
+        set_property used_in_synthesis true [get_files $mem_file]
+        set_property used_in_simulation true [get_files $mem_file]
+    }
+
+    puts "INFO: Memory files added:"
+    foreach mem_file $mem_files {
+        puts "  $mem_file"
+    }
+} else {
+    puts "WARNING: No memory files found in $root_dir/mem"
+}
+
+# --------------------------------------------------------------------
 # Add simulation sources
 # --------------------------------------------------------------------
 
